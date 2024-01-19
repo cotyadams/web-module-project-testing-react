@@ -2,12 +2,36 @@ import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/extend-expect";
 import Episode from "./../Episode";
+import fetchShow from '../../api/fetchShow';
 
-test("renders without error", () => {});
 
-test("renders the summary test passed as prop", () => {});
+const episode = {
+    id: 1,
+    image: "",
+    name: 'episode 1',
+    season: 1,
+    number: 1,
+    summary: 'an episode summary',
+    runtime: '1 minute'
+}
+jest.mock('../../api/fetchShow')
+beforeEach(() => {
+    fetchShow.mockResolvedValueOnce(episode)
+    render(<Episode episode={episode} />);
+})
+test("renders without error", () => {
+});
 
-test("renders default image when image is not defined", () => {});
+test("renders the summary test passed as prop", () => {
+    const summary = screen.getByText(episode.summary)
+    expect(summary).toBeInTheDocument();
+});
+
+test("renders default image when image is not defined", () => {
+    const image = screen.getByRole('img')
+    expect(image.src).toBe('https://i.ibb.co/2FsfXqM/stranger-things.png');
+
+});
 
 // ----- EXAMPLE EPISODE TEST OBJECT -----
 // const exampleEpisodeData = {

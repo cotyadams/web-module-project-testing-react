@@ -22,7 +22,7 @@ const formatSeasons = (allEpisodes) => {
 };
 
 
-const fetchShow = () => {
+const fetchShow =  () => {
   return axios
     .get("https://api.tvmaze.com/singlesearch/shows?q=stranger+things&embed=episodes")
     .then(res => {
