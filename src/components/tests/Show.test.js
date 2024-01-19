@@ -50,8 +50,14 @@ test('handleSelect is called when a season is selected', () => {
     render(<Show show={show} selectedSeason={'none'} handleSelect={handleSelect} />);
     const select = screen.getByLabelText(/Select A Season/i);
     userEvent.selectOptions(select, ['1']);
-
     expect(handleSelect).toBeCalled();
 });
 
-test('component renders when no seasons are selected and when rerenders with a season passed in', () => { });
+test('component renders when no seasons are selected and then rerenders with a season passed in', () => { 
+    const { rerender } = render(<Show show={show} selectedSeason={'none'} />)
+    const component = screen.getByTestId('show-container')
+    expect(component).toBeInTheDocument();
+    rerender(<Show show={show} selectedSeason={1} />)
+    const showName = screen.getByText(show.name)
+    expect(showName).toBeInTheDocument();
+});
